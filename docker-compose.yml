@@ -1,23 +1,32 @@
 version: '2'
 services:
-  mysql: 
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+  postgres:
+    image: sameersbn/postgresql:9.4-13
+    ports:
+      - "5432:5432"
+    environment:
+      DB_USER: 'root'
+      DB_PASS: '123456'
+      DB_NAME: 'rapp_development'
+  mysql:
     image: mysql
     ports:
       - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: '123456'
       MYSQL_DATABASE: rapp_development
-  redis: 
-    image: redis:alpine
-    ports:
-      - "6379:6379"
   web:
     build: .
     command: "rackup -o 0.0.0.0 -p 3000"
     volumes:
-      - .:/usr/src/app
+      - .:/app
     ports:
       - "3000:3000"
     depends_on:
-      - mysql 
+      - mysql
       - redis
+      - postgres
