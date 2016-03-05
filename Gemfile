@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'mysql2'
+gem 'cuba'
 gem 'rack'
 gem 'rack-protection'
-gem 'redis'
-gem 'sinatra'
-gem 'pg'
+gem 'shotgun'
+gem 'puma'
