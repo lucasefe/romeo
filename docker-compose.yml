@@ -1,32 +1,27 @@
 version: '2'
 services:
-  mysql:
-    image: mysql
+  database:
+    image: sameersbn/postgresql:9.4-13
     ports:
-      - "3306:3306"
+      - "5432:5432"
     environment:
-      MYSQL_ROOT_PASSWORD: '123456'
-      MYSQL_DATABASE: rapp_development
-  redis:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
+      DB_USER: 'root'
+      DB_PASS: '123456'
+      DB_NAME: 'development'
   web:
     build: .
-    command: "shotgun --server=puma --port=3000 -o 0.0.0.0 config.ru"
+    command: ./scripts/start
     volumes:
-      - .:/usr/src/app
+      - .:/app
     volumes_from:
       - bundle
     ports:
       - "3000:3000"
     depends_on:
-      - mysql
-      - redis
+      - database
       - bundle
 
   bundle:
     image: busybox
-    command: echo "I'm a little data container, short and stout..."
     volumes:
-      - .:/bundle
+      - ./bundle:/bundle

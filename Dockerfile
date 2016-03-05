@@ -6,8 +6,6 @@ ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
 
-ADD Gemfile* $APP_HOME/
-RUN bundle install
+ENV BUNDLE_PATH /bundle
 
-RUN bundle install
 ADD . $APP_HOME
