@@ -7,21 +7,21 @@ services:
     environment:
       DB_USER: 'root'
       DB_PASS: '123456'
-      DB_NAME: 'development'
+      DB_NAME: 'development,test'
   web:
     build: .
     command: ./scripts/start
     volumes:
       - .:/app
     volumes_from:
-      - bundle
+      - drive
     ports:
       - "3000:3000"
     depends_on:
       - database
-      - bundle
+      - drive
 
-  bundle:
+  drive:
     image: busybox
     volumes:
       - ./bundle:/bundle
