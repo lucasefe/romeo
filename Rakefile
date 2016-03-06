@@ -8,6 +8,7 @@ task :console => :environment do
   ARGV.clear
   require 'pry'
   Pry.config.editor = 'vim'
+  Pry.config.history.file = ".pry_history"
   Pry.start
 end
 
