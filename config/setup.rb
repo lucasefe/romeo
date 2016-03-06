@@ -1,4 +1,4 @@
-require 'sequel'
-require 'pg'
+ENV['RACK_ENV'] ||= 'development'
 
-Database ||= Sequel.connect('postgres://root:123456@database/development')
+require_relative '../lib/db'
+DB.connect
