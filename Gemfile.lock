@@ -1,25 +1,39 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    coderay (1.1.1)
     cuba (3.5.0)
       rack (~> 1.6.0)
+    method_source (0.8.2)
+    minitest (5.8.4)
     pg (0.18.4)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
     puma (3.0.2)
     rack (1.6.4)
     rack-protection (1.5.3)
       rack
+    rake (10.5.0)
+    sequel (4.32.0)
     shotgun (0.9.1)
       rack (>= 1.0)
+    slop (3.6.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   cuba
+  minitest
   pg
+  pry
   puma
   rack
   rack-protection
+  rake
+  sequel
   shotgun
 
 BUNDLED WITH
