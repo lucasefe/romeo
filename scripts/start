@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 
-bundle check || bundle install
+bundle check || bundle install --binstubs
 
-shotgun --server=puma --port=3000 -o 0.0.0.0 config.ru
+bundle exec shotgun --server=puma --port=3000 -o 0.0.0.0 config.ru

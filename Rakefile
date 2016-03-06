@@ -27,6 +27,13 @@ namespace :db do
     Sequel.extension :migration
     version = (row = DB.connection[:schema_info].first) ? row[:version] : nil
     puts "Rolling back to version: #{version}"
-    Sequel::Migrator.apply(DB.connection, 'db/migrate', version - 1)
+    Sequel::Migrator.run(DB.connection, 'db/migrate', target: version - 1)
+  end
+
+  task :seed => :environment do
+    require_relative 'models/user'
+    DB.connection[:users].delete
+    User.create first_name: 'Lucas', last_name: 'Florio', email: 'the@email.com'
+    User.create first_name: 'Tam', last_name: 'Goldsztajn', email: 'szthe@email.com'
   end
 end
