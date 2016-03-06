@@ -12,20 +12,20 @@ task :console => :environment do
 end
 
 namespace :db do
-  desc "Run database migrations"
+  desc 'Run database migrations'
   task :migrate => :environment do
     require 'sequel/extensions/migration'
     Sequel.extension :migration
     puts "Migrating to latest (env: #{ENV['RACK_ENV']})"
-    Sequel::Migrator.run(DB.connection, "db/migrate")
+    Sequel::Migrator.run(DB.connection, 'db/migrate')
   end
 
-  desc "Rollback the database"
+  desc 'Rollback the database'
   task :rollback => :environment do
     require 'sequel/extensions/migration'
     Sequel.extension :migration
     version = (row = DB.connection[:schema_info].first) ? row[:version] : nil
     puts "Rolling back to version: #{version}"
-    Sequel::Migrator.apply(DB.connection, "db/migrate", version - 1)
+    Sequel::Migrator.apply(DB.connection, 'db/migrate', version - 1)
   end
 end
