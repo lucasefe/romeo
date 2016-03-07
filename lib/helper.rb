@@ -1,6 +1,7 @@
 require 'redis'
 require 'rack/session/redis'
 require 'rack/protection'
+require 'json'
 
 module Helper
   def self.included(app)
@@ -8,9 +9,9 @@ module Helper
     app.use Rack::Protection
   end
 
-  def json(output)
+  def as_json(output)
     res.headers['Content-Type'] = 'application/json; charset=utf-8'
-    res.write output
+    res.write output.kind_of?(String) ? output : JSON.dump(output)
   end
 
   def data_path

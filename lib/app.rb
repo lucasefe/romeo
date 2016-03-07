@@ -27,22 +27,45 @@ class App < Cuba
     end
 
     on 'data' do
-      puts session.inspect
-      if session[:access_token]
-        http = Curl.get("https://api.github.com/user") do |request|
-          request.headers['Authorization'] = "token #{session[:access_token]}"
-          request.headers['User-Agent'] = "Super App"
+      on authenticated do |access_token|
+        on 'organizations' do
+          as_json fetch_organizations(access_token)
         end
-        json http.body_str
-      else
+
+        on root do
+          as_json fetch_me(access_token)
+        end
+      end
+
+      on default do
         res.redirect auth_path
       end
     end
 
     on root do
-      session[:counter] ||= 0
-      session[:counter] += 1
       res.write "App Up & Running: #{session.inspect}"
     end
+  end
+
+  private
+
+  def authenticated
+    lambda { captures << session[:access_token] if session.key?(:access_token) }
+  end
+
+  def fetch_me(access_token)
+    fetch('/user', access_token)
+  end
+
+  def fetch_organizations(access_token)
+    fetch('/user/orgs', access_token)
+  end
+
+  def fetch(path, access_token)
+    http = Curl.get("https://api.github.com#{path}") do |request|
+      request.headers['User-Agent'] = "This app I'm building"
+      request.headers['Authorization'] = "token #{access_token}"
+    end
+    http.body_str
   end
 end
