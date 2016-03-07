@@ -1,3 +1,4 @@
 bundle
 .pry_history
 bin
+.env

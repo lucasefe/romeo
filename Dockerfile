@@ -1,5 +1,7 @@
 FROM ruby:2.3
 
+RUN apt-get update -qq  &&  apt-get install -y libsasl2-dev build-essential
+
 ENV APP_HOME /app
 RUN mkdir $APP_HOME
 WORKDIR $APP_HOME
