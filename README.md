@@ -13,3 +13,8 @@ This is just a sample project that I'm using to learn a few things, to keep me i
 
 * Graphql
 * React.js
+
+
+## Licence
+
+Do what you want. 
